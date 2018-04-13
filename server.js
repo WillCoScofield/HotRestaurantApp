@@ -21,6 +21,8 @@ var reservations = [{
     userID: "123456",
 }]
 
+var waitList = [];
+
 
 //routes
 app.get("/", function (req, res) {
@@ -36,19 +38,35 @@ app.get("/reservations", function (req, res) {
 });
 
 app.get("/api/tables", function (req, res) {
+    console.log(req.body)
     return res.json(reservations);
 });
 
 app.post("/api/tables", function (req, res) {
     var newReservation = req.body;
 
-    newReservation.routeName = newReservation.name.replace(/\s+/g, "").toLowerCase();
-
     console.log(newReservation);
 
-    reservations.push(newReservation);
+    // newReservation.routeName = newReservation.name.replace(/\s+/g, "").toLowerCase();
 
-    res.json(newReservation);
+    // console.log(newReservation);
+
+    
+    if (reservations.length <= 5) {
+
+        reservations.push(newReservation);
+        res.json(newReservation);
+        
+
+    }
+    else {
+
+        waitList.push(newReservation);
+        res.json(newReservation);
+    }
+
+
+
 });
 
 //Server started and listening

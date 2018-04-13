@@ -21,12 +21,6 @@ var reservations = [{
     userID: "123456",
 }]
 
-var waitlist = [{
-    userName: "Jane Doe",
-    userPhone: "111-222-2222",
-    userEmail: "jd@mail.com",
-    userID: "123456",
-}]
 
 //routes
 app.get("/", function (req, res) {

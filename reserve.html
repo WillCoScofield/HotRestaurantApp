@@ -34,7 +34,7 @@
                         <span class="glyphicon glyphicon-home"></span>
                     </button>
                 </a>
-                
+
             </div>
             <br>
 
@@ -70,13 +70,55 @@
                                 <label for="reserve-unique-id">Unique Id</label>
                                 <input type="text" class="form-control" id="reserve-unique-id">
                             </div>
-                            <button type="submit" class="btn btn-primary submit">Submit</button>
+                            <button type="submit" class="btn btn-primary submit" id="submit-btn">Submit</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <script type="text/javascript">
 
+
+        $("#submit-btn").on("click", function () {
+            event.preventDefault();
+
+            var newReservation = {
+                userName: $("#reserve-name").val().trim(),
+                userPhone: $("#reserve-phone").val().trim(),
+                userEmail: $("#reserve-email").val().trim(),
+                userID: $("#reserve-unique-id").val().trim()
+
+                //  userName.replace(/\s+/g, "").toLowerCase();
+                //     userPhone = userPhone.replace(/\s+/g, "").toLowerCase();
+                //     userEmail = userEmail.replace(/\s+/g, "").toLowerCase();
+                //     userID = userID.replace(/\s+/g, "").toLowerCase();
+            }
+
+            console.log(newReservation);
+            // Using a RegEx Pattern to remove spaces from searchedCharacter
+            // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
+
+            $.post("/api/tables", newReservation, function (data) {
+                if (data) {
+                    alert("Congrats, you've been booked. Check our reservation table to verify.")
+                }
+                else {
+                    alert("Sorry, you have been put on the wait list.")
+                }
+
+
+                //form clear
+                $("#reserve-name").val("");
+                $("#reserve-phone").val("");
+                $("#reserve-email").val("");
+                $("#reserve-unique-id").val("");
+            })
+
+
+        });
+
+    </script>
 </body>
 
 </html>

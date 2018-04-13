@@ -15,18 +15,12 @@ app.use(bodyParser.json());
 
 //reservations:
 var reservations = [{
-    name: "John Doe",
-    email: "jd@mail.com",
-    phoneNum: "111-111-1111",
-    uID: "123456",
+    userName: "John Doe",
+    userPhone: "jd@mail.com",
+    userEmail: "111-111-1111",
+    userID: "123456",
 }]
 
-var waitlist = [{
-    name: "Jane Doe",
-    email: "jd@mail.com",
-    phoneNum: "111-222-2222",
-    uID: "123456",
-}]
 
 //routes
 app.get("/", function (req, res) {
@@ -45,6 +39,17 @@ app.get("/api/tables", function (req, res) {
     return res.json(reservations);
 });
 
+app.post("/api/tables", function (req, res) {
+    var newReservation = req.body;
+
+    newReservation.routeName = newReservation.name.replace(/\s+/g, "").toLowerCase();
+
+    console.log(newReservation);
+
+    reservations.push(newReservation);
+
+    res.json(newReservation);
+});
 
 //Server started and listening
 app.listen(PORT, function () {

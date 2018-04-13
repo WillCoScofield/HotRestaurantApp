@@ -21,6 +21,8 @@ var reservations = [{
     userID: "123456",
 }]
 
+var waitlist = []
+
 
 //routes
 app.get("/", function (req, res) {
@@ -43,12 +45,15 @@ app.post("/api/tables", function (req, res) {
     var newReservation = req.body;
 
     // newReservation.routeName = newReservation.name.replace(/\s+/g, "").toLowerCase();
-
-    console.log(newReservation);
-
-    reservations.push(newReservation);
-
-    res.json(newReservation);
+    if (reservations.length < 5) {
+        reservations.push(newReservation);
+        res.json(newReservation);
+    }else {
+        console.log("on waiting list: " + newReservation);
+        waitlist.push(newReservation);
+        res.json(newReservation);
+    }
+    
 });
 
 //Server started and listening
